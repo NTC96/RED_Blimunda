@@ -1,13 +1,6 @@
-#programa pincipal esboco
+#Classe que define as funcoes que obtem os dados diretamente dos varios sensores
 
-
-
-
-
-
-
-print("Initialization\nIm in....")
-clock=11212
+print("Initialization\nIm in GET_DATA")
 
 class GET_DATA:
 
@@ -15,10 +8,11 @@ class GET_DATA:
 		#funcao que corre quando a class e declarada
 		#do get data inits here
 		cenas=""
-		
+
 
 	def altitude_raw(self):
-		a=2
+		a="altitude"#isto deve ser um numero e nao uma string 
+
 		#do stuff here
 		return a
 
@@ -34,19 +28,27 @@ class GET_DATA:
 
 		angles= ["roll","pitch","yaw"] #lista coom 3 elementos que contem os 3 angulos de euler 
 							#angles = [roll,pitch,yaw]
+		#do stuff here					
 		return angles 
 	def magneto_raw(self):
 
 		magneto = ["mx","my","mz"] #lista coom 3 elementos que contem as 3 componentes do campo magnetico medido 
-							#magneto = [mx,my,mz]
+					#do stuff here		#magneto = [mx,my,mz]
 		return magneto
 	def accelaration_raw(self):
 
 		accelaration = ["ax","ay","az"] #lista coom 3 elementos que contem as 3 componentes da acelaracao medida
-							#magneto = [ax,ay,az]
+							#acelaration = [ax,ay,az]
+							#do stuff here
 		return accelaration
 
 
-p1=GET_DATA()
-print(clock)
-print(p1.altitude_raw())
+	def gps_raw(self):
+
+		position = ["x","y","z"] #lista coom 3 elementos que contem as 3 componentes da acelaracao medida
+							#position= [ax,ay,az]
+							#do stuff here
+		return position
+
+
+
