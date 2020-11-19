@@ -14,13 +14,13 @@ class LORA:
 		#do lora inits here
 	def lora_receive(self):
 			#do stuff here
-		msg_received = ["datatype","value","key"]
+		msg_received = ["datatype","value","key","msg_sent"]
 		return msg_received
 
 
 	def lora_send(self,datatype,value):
 			#do stuff here
-		msg_sent = ["datatype","value","key"]
+		msg_sent = ["datatype","value","key","msg_sent"]
 		return msg_sent
 	
 

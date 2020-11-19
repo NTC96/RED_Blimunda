@@ -8,7 +8,6 @@ GET=GET_DATA()
 Lora=LORA(COMMS_KEY)
 
 
-#teste Thomas
 
 
 print("hello MAIN")
@@ -32,15 +31,9 @@ def Get_sensors():
 	print(e)
 
 
-def create_thread():
-	#do stuff here
-
-def analyse_Lora():
-	 
-
 def MAIN():
 
-	Get_sensor()
+	Get_sensors()
 
 
 
