@@ -8,6 +8,7 @@ GET=GET_DATA()
 Lora=LORA(COMMS_KEY)
 
 
+#teste Thomas
 
 
 print("hello MAIN")
