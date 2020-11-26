@@ -16,7 +16,7 @@ class GET_DATA:
 		#do stuff here
 		return a
 
-
+teste_
 
 	def temperature_raw(self):
 
