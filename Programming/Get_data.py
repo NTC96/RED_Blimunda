@@ -1,5 +1,7 @@
 #Classe que define as funcoes que obtem os dados diretamente dos varios sensores
 
+#isto e so um teste
+
 print("Initialization\nIm in GET_DATA")
 
 class GET_DATA:
