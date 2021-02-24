@@ -219,7 +219,15 @@ def Get_sensors_thread_function_test(t_condition):
 		t_condition[3].release()
 		test_euler_angles = 0
 		t_lora_send.start()
-	if rocket_mode_global == ""
+	if rocket_mode_global == "Teste" and test_acelaration ==1:
+		t_condition[4].acquire()
+		euler_angles_global = GET.angles_raw()
+		t_lora_send = threading.Thread(target=Lora_thread_function_send, args=(t_condition,"ace_test",accelaration_global,)) #send to station
+		t_condition[4].release()
+		test_acelaration = 0
+		t_lora_send.start()
+	
+
 	t_condition[10].release()
 	
 def Get_sensors_thread_function_standby(t_condition,accelaration):
@@ -311,13 +319,13 @@ def t_control_thread(t_condition,h):
 	global control_ready
 	global elapsed_flight_time
 
-	t_condition[].acquire()
+	t_condition[13].acquire()
 	control_ready=0
-	t_condition[].release()
+	t_condition[13].release()
 	CONTROL.iteration(elapsed_flight_time, h)
-	t_condition[].acquire()
+	t_condition[13].acquire()
 	control_ready=1
-	t_condition[].release()
+	t_condition[13].release()
 
 
 

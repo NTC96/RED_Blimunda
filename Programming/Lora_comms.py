@@ -22,7 +22,7 @@ class LORA:
 		Value = {test_airbrakes,"test_gps","test_altimetro", " ",outros_testes,StandBye,Flight]
 		Key=
 		'''
-		msg_received = ["datatype","value","RED_ROCKS!!","msg_sent"] #[Datatype, Value, Key]
+		msg_received = ["COMMAND","Flight","RED_ROCKS!!","msg_sent"] #[Datatype, Value, Key]
 		return msg_received
 
 
