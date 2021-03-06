@@ -39,7 +39,7 @@ text_flag=0
 #Constantes
 accelaration_noise_factor = 2 # se aceelaracao > 2g durante 1s ja descolou
 previous_time = 0 
-
+msg_rate=40
 #lista da threading conditions
 t_condition=[]  #0              1             2       3           4         5         6               7             8            9                  10
 #t_condition=[mode_check,altitude_check,temp_check,euler_check,ace_check,gps_check,l_lora_ok_check,lora_flag_check,control_ready,tempo_zero_check, elapsed_fligh_time_check ]
@@ -63,7 +63,6 @@ def Lora_thread_function_receive(t_condition): #funcao que vai estar sempre a re
 	global launch_lora_ok
 	msg_received=Lora.lora_receive() #msg_received = ["datatype","value","key"]
 	#trata da informacao recebida
-
 	if msg_received != 0 :
 		print("recebeu")
 		print(msg_received)
@@ -151,7 +150,7 @@ def Get_sensors_thread_function_test(t_condition,teste):
 
 	if teste == "altimetro":
 		print("altitude raw")
-		altitude_global = GET.altitude_raw()
+		altitude_global = GET.altitude_raw_sense()
 		t_lora_send = threading.Thread(target=Lora_thread_function_send, args=(t_condition,"altitude_test",altitude_global,)) #send to station
 		t_lora_send.start()
 
@@ -168,8 +167,8 @@ def Get_sensors_thread_function_test(t_condition,teste):
 		t_lora_send = threading.Thread(target=Lora_thread_function_send, args=(t_condition,"euler_test",euler_angles_global,)) #send to station
 		t_lora_send.start()
 
-	if teste == "acelaration":
-		euler_angles_global = GET.angles_raw()
+	if teste == "accelaration":
+		accelaration_global = GET.acceleration_raw()
 		t_lora_send = threading.Thread(target=Lora_thread_function_send, args=(t_condition,"ace_test",accelaration_global,)) #send to station
 		t_lora_send.start()
 
@@ -214,7 +213,7 @@ def Get_sensors_thread_function_flight(t_condition):
 	global lora_flag
 
 	t_condition[0].acquire()
-	altitude_global = GET.altitude_raw()
+	altitude_global = GET.altitude_raw_sense()
 	t_condition[0].release()
 	t_condition[3].acquire()
 	euler_angles_global = GET.angles_raw()
@@ -223,7 +222,7 @@ def Get_sensors_thread_function_flight(t_condition):
 	elapsed_flight_time = time.time() - tempo_zero
 	t_condition[10].release()
 	t_condition[4].acquire()
-	accelaration_global = GET.accelaration_raw()
+	accelaration_global = GET.acceleration_raw()
 	t_condition[4].release()
 	t_condition[5].acquire()
 	gps_global = GET.gps_raw()
@@ -232,12 +231,13 @@ def Get_sensors_thread_function_flight(t_condition):
 	if rocket_mode_global == "Standby":
 		t_sensors_standby = threading.Thread(target=Get_sensors_thread_function_standby, args=(t_condition,accelaration_global,))
 		t_sensors_standby.start()
-	data = str(altitude_global) + ";" + str(gps_global) + ";" + str(accelaration_global) + ";" + str(euler_angles_global) + ";" +str(elapsed_flight_time)
-	if lora_flag == 0 :
+	data = str(round(altitude_global,4)) + ";" + str(gps_global) + ";" + str(accelaration_global) + ";" + str(euler_angles_global) + ";" +str(round(elapsed_flight_time,5))
+	if lora_flag == 0 and Lora.msg_id_sent % msg_rate  ==0:
+		print("Lora-----------",Lora.msg_id_sent)
 		lora_flag = 1
 		t_lora_send = threading.Thread(target=Lora_thread_function_send, args=(t_condition,"Data",data,)) #send to station
 		t_lora_send.start()
-
+	Lora.msg_id_sent+=1
 	t_file = threading.Thread(target=save_data, args=(t_condition,data,))
 	t_file.start()
 
@@ -269,15 +269,13 @@ def save_data(t_condition,data):
 	# file.write("Format: rel.time(s) press(Pa) altitude(m) temp(oC) [pitch roll yaw](rad) [mx my mz](microteslas) [
 	# ax ay az](Gs)\n\n")
 	if text_flag==0:
-		print("file2")
 		file = open(filename,"w")
 		ctime = time.ctime()
 		file.write("Start time = %s\n\n" % ctime)
 		file.write("Format: rel.time(s) press(Pa) altitude(m) temp(oC) [pitch roll yaw](rad) [ax ay az](Gs)\n\n") 
 		text_flag=1
 	else :
-		print("fileelse")
-		print(data)
+		#print(data)
 		file = open(filename,"a")
 		file.write(data+"\n")
 
@@ -339,10 +337,10 @@ def MAIN():
 		if rocket_mode_global == "Standby": #prelancamento
 
 			if lora_flag == 0:
-
-				t_lora_receive = threading.Thread(target=Lora_thread_function_receive, args=(t_condition,))
-				t_lora_receive.start()
-				t_lora_receive.join()
+				if launch_lora_ok == 0:
+					t_lora_receive = threading.Thread(target=Lora_thread_function_receive, args=(t_condition,))
+					t_lora_receive.start()
+					t_lora_receive.join()
 				t_sensor_flight = threading.Thread(target=Get_sensors_thread_function_flight, args=(t_condition,))
 				t_sensor_flight.start()
 

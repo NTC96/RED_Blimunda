@@ -33,7 +33,7 @@ class LORA:
 		msg_sent = []
 		msg_sent.append(datatype)
 		msg_sent.append(value)
-		self.msg_id_sent+=1
+
 		msg_sent.append(self.true_key)
 		msg_sent.append(self.msg_id_sent)
 		#print("LORA MSG SENT", msg_sent)

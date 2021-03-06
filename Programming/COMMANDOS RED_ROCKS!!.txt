@@ -1,0 +1,18 @@
+BLIMUNDA MANUAL:
+
+Comandos a ser enviados apartir da station:
+KEY = "RED_ROCKS!!"
+
+
+TESTES: format = { COMMAND + test + KEY }
+
+	-COMMAND test_airbrakes RED_ROCKS!!
+	-COMMAND test_acelaration RED_ROCKS!!
+	-COMMAND test_altimetro RED_ROCKS!!
+	-COMMAND test_gps RED_ROCKS!!
+	-COMMAND test_euler RED_ROCKS!!
+
+PRÉ LAUNCH: format = { FLIGHTMODE + mode + KEY}
+
+	- FLIGHTMODE standby RED_ROCKS!!
+	- FLIGHTMODE launch RED_ROCKS!!
