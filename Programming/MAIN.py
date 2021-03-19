@@ -248,6 +248,7 @@ def Get_sensors_thread_function_flight(t_condition):
 def t_control_thread(t_condition,h):
 	global control_ready
 	global elapsed_flight_time
+
 	t_condition[8].acquire()
 	control_ready=0
 	t_condition[8].release()
@@ -368,6 +369,8 @@ def MAIN():
 					t_control.start()
 				#controller
 				#h  a ser usado
+
+
 
 MAIN()
 if time.time() - start > 5 :

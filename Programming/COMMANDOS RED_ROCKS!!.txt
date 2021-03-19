@@ -14,5 +14,5 @@ TESTES: format = { COMMAND + test + KEY }
 
 PRÉ LAUNCH: format = { FLIGHTMODE + mode + KEY}
 
-	- FLIGHTMODE standby RED_ROCKS!!
+	-  
 	- FLIGHTMODE launch RED_ROCKS!!
