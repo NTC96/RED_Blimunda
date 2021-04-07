@@ -7,7 +7,8 @@ import time
 from Get_data import GET_DATA
 from Kalman import KALMAN
 from Lora_comms import LORA
-from Control import CONTROL_BLOCK
+from Controlador_Blimunda_V4_0.py import *
+
 ser = serial.Serial("/dev/ttyS0",115200)
 ser.flushInput()
 ser.flushOutput()
@@ -16,6 +17,7 @@ GET=GET_DATA()
 Lora=LORA(COMMS_KEY,ser)
 FILTRO = KALMAN()
 CONTROL = CONTROL_BLOCK()
+CONTROL.setup()
 
 #####################Variaveis globais########################################
 #MODOS
