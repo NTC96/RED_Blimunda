@@ -7,8 +7,9 @@
 
 import time
 from scipy import interpolate
-import matplotlib.pyplot as plt
-import RPi.GPIO as GPIO
+#import matplotlib.pyplot as plt
+#import RPi.GPIO as GPIO
+import numpy as np 
 
 class CONTROL_BLOCK:
     def __init__(self):
@@ -160,7 +161,7 @@ class CONTROL_BLOCK:
 
         return self.flag
 
-    def steppler(self, x):
+    def stepper(self, x):
         #Definimos cada um dos pins do Raspberry Pi que vamos utilizar como entradas e saídas do stepper
         out1 = 13 #IN1
         out2 = 11 #IN2
@@ -335,10 +336,10 @@ class CONTROL_BLOCK:
         
         return result
 
-    def plot(self):
+    #def plot(self):
 
-        plt.plot(self.plottlist, self.plotcdlist)
-        plt.figure()
+       # plt.plot(self.plottlist, self.plotcdlist)
+        #plt.figure()
         
         #f = open("erros.txt", "a")
         #for i in range(2, len(self.errorlist)):
@@ -353,25 +354,26 @@ class CONTROL_BLOCK:
         return
 ################################################
 
-# if __name__ == "__main__":
-#
-#     classe = CONTROL_BLOCK()
-#     classe.setup()
-#
-#     i = 0
-#     t0 = time.time()
-#
-#     while(i < 2500):
-#         current_time = time.time()
-#         elapsed_time = current_time - t0
-# 
-#         if elapsed_time > 5:
-#             classe.iteration(elapsed_time, classe.get_real_trajectory(elapsed_time))
-#
-#         i+=1
-#         time.sleep(0.01)
-#
-#     classe.plot()
+if __name__ == "__main__":
+
+    classe = CONTROL_BLOCK()
+    classe.setup()
+
+    i = 0
+    t0 = time.time()
+
+    while(i < 2500):
+        current_time = time.time()
+        elapsed_time = current_time - t0
+
+        if elapsed_time > 5:
+            classe.iteration(elapsed_time, classe.get_real_trajectory(elapsed_time))
+
+        i+=1
+        print(i)
+        time.sleep(0.01)
+
+    #classe.plot()
 
 
 
