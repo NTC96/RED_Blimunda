@@ -255,7 +255,7 @@ class CONTROL_BLOCK:
                         i=7
                     else:
                         i=i-1
-                    y=y+3
+                    y+=3
                     positive=0
                 negative=1
                 if i==0:

@@ -2,6 +2,8 @@
 import time
 print("hello LORA")
 
+# compressão de dados, forma como se guardam no sd
+
 class LORA:
 	"""docstring for LORA"""
 

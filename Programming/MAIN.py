@@ -335,7 +335,7 @@ def MAIN():
 				t_lora_receive.start()
 				t_lora_receive.join()
 
-
+# Será necessário talvez acrescentar aqui um tempo de escuta mínimo como foi no Aurora
 
 		if rocket_mode_global == "Standby": #prelancamento
 
@@ -349,6 +349,7 @@ def MAIN():
 
 		if rocket_mode_global == "Flight":
 
+# necessário rever mfr e todos esses parâmetros do rocket e corrigir filtro
 			t_sensor_flight.start()
 			if altitude_global != altitude:
 				#wait altitude

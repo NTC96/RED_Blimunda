@@ -25,6 +25,7 @@ i2c = busio.I2C(board.SCL, board.SDA)
 # Set this to a value in pascals:
 #sensor.sealevel_pressure = 102250
 
+# Adicionar código para o BNO e acrescentar a cena do GPS
 
 class GET_DATA:
 
