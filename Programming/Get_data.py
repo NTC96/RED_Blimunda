@@ -173,6 +173,57 @@ class GET_DATA:
         camera.stop_recording()
         camera.stop_preview()
         return
+    
+    def obter_acel_vert(self):
+        off_x=-numpy.pi/2
+        off_y=0
+        off_z=0
+​
+        off_acel_x=0
+        off_acel_y=0
+        off_acel_z=0
+​
+        i2c_mux_select.I2C_setup(0x70, 0)
+        i2c_mux_select.I2C_setup(0x70, 4)
+​
+        phi = self.sensor.euler[2]+off_x
+        theta = self.sensor.euler[1]+off_y
+        psi = self.sensor.euler[0]+off_z
+​
+        R = [[0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]]
+​
+        R[0][0] = cos(theta)*cos(psi)
+        R[0][1] = sin(theta)*sin(phi)*cos(psi) + cos(phi)*sin(psi)
+        R[0][2] = sin(phi)*sin(psi) - cos(phi)*sin(theta)*cos(psi)
+​
+        R[1][0] = -cos(theta)*sin(psi)
+        R[1][1] = cos(phi)*cos(psi) - sin(phi)*sin(psi)*sin(theta)
+        R[1][2] = cos(phi)*sin(theta)*sin(psi) + sin(phi)*cos(psi)
+​
+        R[2][0] = sin(theta)
+        R[2][1] = -sin(phi)*cos(theta)
+        R[2][2] = cos(phi) * cos(theta)
+​
+        a = [0, 0, 0]
+        b = [0, 0, 0]
+​
+        a[0] = self.sensor1.acceleration[0]
+        a[1] = self.sensor1.acceleration[1]
+        a[2] = self.sensor1.acceleration[2]
+​
+        for i in range(3):
+            soma = 0
+            for j in range(3):
+                soma = soma + R[i][j] * a[j]
+            b[i] = soma
+​
+        acel_x_terra = b[0]-off_acel_x
+        acel_y_terra = b[1] - off_acel_y
+        acel_z_terra = b[2] - off_acel_z
+​
+        return acel_z_terra-9.81
 
 
 
