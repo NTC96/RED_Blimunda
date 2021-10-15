@@ -64,9 +64,9 @@ def comprime_dados(acc, gps, alt, v, rot, t, f, msg):
 
     # comprime t
     if t < 0:
-        alt = 0
+        t = 0
     if t > 99999:
-        alt = 99999
+        t = 99999
     t = '{:05.0f}'.format(t)
     s += str(t)
 
